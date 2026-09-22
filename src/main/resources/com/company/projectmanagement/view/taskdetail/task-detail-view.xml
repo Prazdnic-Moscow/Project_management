@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://taskDetailView.title">
+    <actions>
+        <action id="closeAction" type="detail_close"/>
+        <action id="saveCloseAction" type="detail_saveClose"/>
+    </actions>
+    <data>
+        <instance id="taskDc" class="com.company.projectmanagement.entity.Task">
+            <fetchPlan extends="_base">
+                <property name="assignee" fetchPlan="_base"/>
+                <property name="project" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="taskDl"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <layout>
+        <formLayout id="taskForm" dataContainer="taskDc">
+            <textField property="name"/>
+            <datePicker property="dueDate"/>
+            <textField property="estimation"/>
+            <textArea id="textAreaChange" property="description" maxLength="500" valueChangeMode="EAGER"/>
+            <select property="priority"/>
+            <entityPicker property="assignee">
+                <actions>
+                    <action id="clearAction" type="entity_clear"/>
+                    <action id="lookupAction" type="entity_lookup"/>
+                </actions>
+            </entityPicker>
+            <entityPicker property="project">
+                <actions>
+                    <action id="clearAction_1" type="entity_clear"/>
+                    <action id="lookupAction_1" type="entity_lookup"/>
+                </actions>
+            </entityPicker>
+            <fileStorageUploadField id="attachmentField"
+                                    property="attachment"
+                                    fileNameVisible="true"
+                                    clearButtonVisible="true"
+                                    uploadIcon="UPLOAD" maxFileSize="10000000"/>
+        </formLayout>
+        <hbox>
+            <button id="closeActionButton" action="closeAction"/>
+            <button id="saveCloseActionButton" action="saveCloseAction"/>
+        </hbox>
+    </layout>
+</view>
